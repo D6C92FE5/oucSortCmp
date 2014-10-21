@@ -235,6 +235,15 @@ void prepare_data() {
 	count_compare = 0;
 	count_move = 0;
 }
+// 检查是否真的排好序了
+void test_sorted() {
+	for (int i = 1; i < N; i++) {
+		if (sortdata[i] < sortdata[i - 1]) {
+			cout << "排序结果有误" << endl << flush;
+			throw new exception("排序结果有误");
+		}
+	}
+}
 // 输出关键字比较次数和关键字移动次数
 void print_count() {
 	cout << "比较 " << count_compare << " 次，";
@@ -246,6 +255,7 @@ void test(const char *name, void (*sort)(Item a[])) {
 	prepare_data();
 	sort(sortdata);
 	cout << name;
+	test_sorted();
 	print_count();
 	cout << endl;
 }
