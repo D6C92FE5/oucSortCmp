@@ -53,10 +53,7 @@ public:
 };
 
 // 待排序数据量
-const int N = 100000;
-
-// 每种测试数据测试次数
-const int TEST_N = 5;
+const int N = 1000;
 
 // 产生的测试数据
 Item *testdata;
