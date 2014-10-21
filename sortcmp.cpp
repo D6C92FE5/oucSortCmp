@@ -69,9 +69,9 @@ void swap(Item &a, Item &b) {
 
 // 冒泡排序
 void sort_bubble(Item a[]) {
-	for (int k = 0; k < N; k++) {
+	for (int k = 1; k < N; k++) {
 		bool swapped = false;
-		for (int i = 0; i < N-1; i++) {
+		for (int i = 0; i < N-k; i++) {
 			if (a[i+1] < a[i]) {
 				swap(a[i], a[i+1]);
 				swapped = true;
@@ -85,14 +85,12 @@ void sort_bubble(Item a[]) {
 
 // 插入排序
 void sort_insertion(Item a[]) {
-	for (int k = 1; k < N; k++) {
-		int i = k;
-		while (i > 0 && a[k] < a[i-1]) {
-			i--;
-		}
+	for (int k = 1; k <= N; k++) {
 		Item t = a[k];
-		for (int j = k; j > i; j--) {
-			a[j] = a[j-1];
+		int i = k;
+		while (i > 0 && a[i-1] > t) {
+			a[i] = a[i-1];
+			i--;
 		}
 		a[i] = t;
 	}
@@ -100,14 +98,14 @@ void sort_insertion(Item a[]) {
 
 // 选择排序
 void sort_selection(Item a[]) {
-	for (int k = 0; k < N - 1; k++) {
-		int t = k;
-		for (int i = k+1; i < N; i++) {
+	for (int k = 1; k < N; k++) {
+		int t = k - 1;
+		for (int i = k; i < N; i++) {
 			if (a[i] < a[t]) {
 				t = i;
 			}
 		}
-		swap(a[k], a[t]);
+		swap(a[k-1], a[t]);
 	}
 }
 
@@ -238,8 +236,8 @@ void prepare_data() {
 // 检查是否真的排好序了
 void test_sorted() {
 	for (int i = 1; i < N; i++) {
-		if (sortdata[i] < sortdata[i-1]) {
-			cout << "排序结果有误" << endl << flush;
+		if (sortdata[i-1] > sortdata[i]) {
+			cout << " 排序结果有误" << endl << flush;
 			throw new exception("排序结果有误");
 		}
 	}
@@ -255,19 +253,19 @@ void test(const char *name, void (*sort)(Item a[])) {
 	prepare_data();
 	sort(sortdata);
 	cout << name;
-	test_sorted();
 	print_count();
+	test_sorted();
 	cout << endl;
 }
 
 // 测试一组数据
 void test_all() {
-	test("    冒泡排序，", sort_bubble);
-	test("    插入排序，", sort_insertion);
+	//test("    冒泡排序，", sort_bubble);
+	//test("    插入排序，", sort_insertion);
 	test("    选择排序，", sort_selection);
-	test("    快速排序，", sort_quick);
-	test("    希尔排序，", sort_shell);
-	test("    　堆排序，", sort_heap);
+	//test("    快速排序，", sort_quick);
+	//test("    希尔排序，", sort_shell);
+	//test("    　堆排序，", sort_heap);
 }
 
 int main() {
