@@ -71,9 +71,9 @@ void swap(Item &a, Item &b) {
 void sort_bubble(Item a[]) {
 	for (int k = 0; k < N; k++) {
 		bool swapped = false;
-		for (int i = 0; i < N - 1; i++) {
-			if (a[i + 1] < a[i]) {
-				swap(a[i], a[i + 1]);
+		for (int i = 0; i < N-1; i++) {
+			if (a[i+1] < a[i]) {
+				swap(a[i], a[i+1]);
 				swapped = true;
 			}
 		}
@@ -87,12 +87,12 @@ void sort_bubble(Item a[]) {
 void sort_insertion(Item a[]) {
 	for (int k = 1; k < N; k++) {
 		int i = k;
-		while (i > 0 && a[k] < a[i - 1]) {
+		while (i > 0 && a[k] < a[i-1]) {
 			i--;
 		}
 		Item t = a[k];
 		for (int j = k; j > i; j--) {
-			a[j] = a[j - 1];
+			a[j] = a[j-1];
 		}
 		a[i] = t;
 	}
@@ -102,7 +102,7 @@ void sort_insertion(Item a[]) {
 void sort_selection(Item a[]) {
 	for (int k = 0; k < N - 1; k++) {
 		int t = k;
-		for (int i = k + 1; i < N; i++) {
+		for (int i = k+1; i < N; i++) {
 			if (a[i] < a[t]) {
 				t = i;
 			}
@@ -168,9 +168,9 @@ void sort_shell(Item a[]) {
 void sort_heap_sift(Item a[], int i, int n) {
 	int child;
 	Item t;
-	for (t = a[i]; n >= 2 * i; i = child) {
+	for (t = a[i]; n >= 2*i; i = child) {
 		child = 2 * i;
-		if (child != n && a[child + 1] > a[child]) {
+		if (child != n && a[child+1] > a[child]) {
 			child++;
 		}
 		if (t < a[child]) {
@@ -184,12 +184,12 @@ void sort_heap_sift(Item a[], int i, int n) {
 // 堆排序
 void sort_heap(Item a[]) {
 	int i;
-	for (i = N / 2; i >= 1; i--) {
+	for (i = N/2; i >= 1; i--) {
 		sort_heap_sift(a, i, N);
 	}
 	for (i = N; i >= 2; i--) {
 		swap(a[1], a[i]);
-		sort_heap_sift(a, 1, i - 1);
+		sort_heap_sift(a, 1, i-1);
 	}
 }
 
@@ -203,21 +203,21 @@ void generate_data_random() {
 void generate_data_nearly_sorted() {
 	testdata[0].v = rand();
 	for (int i = 1; i < N; i++) {
-		testdata[i].v = testdata[i - 1].v + (rand() & 7) - 1;
+		testdata[i].v = testdata[i-1].v + (rand() & 7) - 1;
 	}
 }
 // 生成已排好序的数据
 void generate_data_sorted() {
 	testdata[0].v = rand();
 	for (int i = 1; i < N; i++) {
-		testdata[i].v = testdata[i - 1].v + (rand() & 15);
+		testdata[i].v = testdata[i-1].v + (rand() & 15);
 	}
 }
 // 生成逆序的数据
 void generate_data_reversed() {
 	testdata[0].v = 0x7FFFFFFF - rand();
 	for (int i = 1; i < N; i++) {
-		testdata[i].v = testdata[i - 1].v - (rand() & 15);
+		testdata[i].v = testdata[i-1].v - (rand() & 15);
 	}
 }
 // 生成重复项很多的数据
@@ -238,7 +238,7 @@ void prepare_data() {
 // 检查是否真的排好序了
 void test_sorted() {
 	for (int i = 1; i < N; i++) {
-		if (sortdata[i] < sortdata[i - 1]) {
+		if (sortdata[i] < sortdata[i-1]) {
 			cout << "排序结果有误" << endl << flush;
 			throw new exception("排序结果有误");
 		}
