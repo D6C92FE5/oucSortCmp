@@ -70,9 +70,9 @@ void swap(Item &a, Item &b) {
 
 // 冒泡排序
 void sort_bubble(Item a[]) {
-	for (int k = 1; k < N; k++) {
+	for (int j = 1; j < N; j++) {
 		bool swapped = false;
-		for (int i = 0; i < N-k; i++) {
+		for (int i = 0; i < N-j; i++) {
 			if (a[i+1] < a[i]) {
 				swap(a[i], a[i+1]);
 				swapped = true;
@@ -86,9 +86,9 @@ void sort_bubble(Item a[]) {
 
 // 插入排序
 void sort_insertion(Item a[]) {
-	for (int k = 1; k <= N; k++) {
-		Item t = a[k];
-		int i = k;
+	for (int j = 1; j <= N; j++) {
+		Item t = a[j];
+		int i = j;
 		while (i > 0 && a[i-1] > t) {
 			a[i] = a[i-1];
 			i--;
@@ -99,14 +99,14 @@ void sort_insertion(Item a[]) {
 
 // 选择排序
 void sort_selection(Item a[]) {
-	for (int k = 1; k < N; k++) {
-		int t = k - 1;
-		for (int i = k; i < N; i++) {
+	for (int j = 1; j < N; j++) {
+		int t = j - 1;
+		for (int i = j; i < N; i++) {
 			if (a[i] < a[t]) {
 				t = i;
 			}
 		}
-		swap(a[k-1], a[t]);
+		swap(a[j-1], a[t]);
 	}
 }
 
@@ -275,10 +275,10 @@ void test(const char *name, void (*sort)(Item a[])) {
 
 // 测试一组数据
 void test_all() {
-	//test("    冒泡排序，", sort_bubble);
-	//test("    插入排序，", sort_insertion);
-	//test("    选择排序，", sort_selection);
-	//test("    快速排序，", sort_quick);
+	test("    冒泡排序，", sort_bubble);
+	test("    插入排序，", sort_insertion);
+	test("    选择排序，", sort_selection);
+	test("    快速排序，", sort_quick);
 	test("    希尔排序，", sort_shell);
 	//test("    　堆排序，", sort_heap);
 }
