@@ -5,10 +5,13 @@ using namespace std;
 
 // 关键字比较次数
 long long count_compare;
-// 关键字移动次数
+// 关键字移动（赋值）次数
 long long count_move;
 
-// 关键字类型
+// 关键字数量
+const int N = 1000;
+
+// 关键字类型，重载了相关运算符以记录比较次数和移动次数
 class Item {
 public:
 	Item() {
@@ -52,16 +55,13 @@ public:
 	int v;
 };
 
-// 待排序数据量
-const int N = 1000;
-
-// 产生的测试数据
+// 生成的测试数据
 Item *testdata;
 // 用于排序的数据
 Item *sortdata;
 
 // 交换两个关键字
-void swap(Item &a, Item &b) {
+inline void swap(Item &a, Item &b) {
 	Item t = a;
 	a = b;
 	b = t;
