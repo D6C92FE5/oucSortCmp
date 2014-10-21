@@ -178,30 +178,29 @@ void sort_shell(Item a[]) {
 
 // 堆排序 堆调整
 void sort_heap_sift(Item a[], int i, int n) {
-	int child;
-	Item t;
-	for (t = a[i]; n >= 2*i; i = child) {
-		child = 2 * i;
-		if (child != n && a[child+1] > a[child]) {
-			child++;
-		}
-		if (t < a[child]) {
-			a[i] = a[child];
-		} else {
+	do {
+		int ci = 2*i + 1;  // child index
+		if (ci >= n) {
 			break;
 		}
-	}
-	a[i] = t;
+		if ((ci+1 < n) && a[ci+1] > a[ci]) {
+			ci = ci+1;
+		}
+		if (a[i] > a[ci]) {
+			break;
+		}
+		swap(a[i], a[ci]);
+		i = ci;
+	} while (true);
 }
 // 堆排序
 void sort_heap(Item a[]) {
-	int i;
-	for (i = N/2; i >= 1; i--) {
+	for (int i = (N-2)/2; i >= 0; i--) {  // i < (N-1)/2 => i == ceil((N-1)/2)-1 => i == (N-2)/2
 		sort_heap_sift(a, i, N);
 	}
-	for (i = N; i >= 2; i--) {
-		swap(a[1], a[i]);
-		sort_heap_sift(a, 1, i-1);
+	for (int i = N-1; i > 0; i--) {
+		swap(a[0], a[i]);
+		sort_heap_sift(a, 0, i);
 	}
 }
 
@@ -280,7 +279,7 @@ void test_all() {
 	test("    选择排序，", sort_selection);
 	test("    快速排序，", sort_quick);
 	test("    希尔排序，", sort_shell);
-	//test("    　堆排序，", sort_heap);
+	test("    　堆排序，", sort_heap);
 }
 
 int main() {
