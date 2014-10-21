@@ -158,27 +158,22 @@ void sort_quick(Item a[]) {
 	sort_quick(a, 0, N);
 }
 
-// 希尔排序 步长序列长度
-const int sort_shell_dist_n = 3;
-// 希尔排序 步长序列
-int sort_shell_dist[sort_shell_dist_n] = {5, 3, 1};
 // 希尔排序
-void sort_shell(Item a[], int d[], int dn) {
-	for (int k = 0; k < dn; ++k)
-		for (int i = d[k]; i < N; ++i)
-			if (a[i] < a[i - d[k]]) {
-				Item t = a[i];
-				int j = i - d[k];
-				while (j > 0 && t < a[j]) {
-					a[j + d[k]] = a[j];
-					j -= d[k];
-				}
-				a[j + d[k]] = t;
-			}
-}
-// 希尔排序 开始
 void sort_shell(Item a[]) {
-	sort_shell(a, sort_shell_dist, sort_shell_dist_n);
+	const int dn = 3;
+	int da[dn] = { 5, 3, 1 };  // 步长序列
+	for (int k = 0; k < dn; k++) {
+		int d = da[k];
+		for (int j = d; j <= N; j+=d) {
+			Item t = a[j];
+			int i = j;
+			while (i > 0 && a[i-d] > t) {
+				a[i] = a[i-d];
+				i-=d;
+			}
+			a[i] = t;
+		}
+	}
 }
 
 // 堆排序 堆调整
@@ -283,8 +278,8 @@ void test_all() {
 	//test("    冒泡排序，", sort_bubble);
 	//test("    插入排序，", sort_insertion);
 	//test("    选择排序，", sort_selection);
-	test("    快速排序，", sort_quick);
-	//test("    希尔排序，", sort_shell);
+	//test("    快速排序，", sort_quick);
+	test("    希尔排序，", sort_shell);
 	//test("    　堆排序，", sort_heap);
 }
 
