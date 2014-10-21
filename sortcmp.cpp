@@ -67,6 +67,7 @@ void swap(Item &a, Item &b) {
 	b = t;
 }
 
+
 // 冒泡排序
 void sort_bubble(Item a[]) {
 	for (int k = 1; k < N; k++) {
@@ -111,28 +112,46 @@ void sort_selection(Item a[]) {
 
 // 快速排序
 void sort_quick(Item a[], int l, int r) {
+	if (l >= r) {
+		return;
+	}
 	int i = l;
 	int j = r;
 	Item x = a[l];
-	while (i <= j) {
-		while (a[i] < x) {
-			++i;
+	while (i < j) {
+		while (i < j && a[j] > x) {
+			j--;
 		}
-		while (a[j] > x) {
-			--j;
+		if (i < j) {
+			a[i] = a[j];
+			i++;
 		}
-		if (i <= j) {
-			swap(a[i], a[j]);
-			++i;
-			--j;
+		while (i < j && a[i] < x) {
+			i++;
+		}
+		if (i < j) {
+			a[j] = a[i];
+			j--;
 		}
 	}
-	if (l < j) {
-		sort_quick(a, l, j);
+	a[i] = x;
+	sort_quick(a, l, i - 1);
+	sort_quick(a, i + 1, r);
+}
+// 快速排序 紧凑版
+void sort_quick_compact(Item a[], int l, int r) {
+	if (l >= r) return;
+	int i = l, j = r;
+	Item x = a[l];
+	while (i < j) {
+		while (i < j && a[j] > x) j--;
+		if (i < j) a[i++] = a[j];
+		while (i < j && a[i] < x) i++;
+		if (i < j) a[j--] = a[i];
 	}
-	if (i < r) {
-		sort_quick(a, i, r);
-	}
+	a[i] = x;
+	sort_quick_compact(a, l, i - 1);
+	sort_quick_compact(a, i + 1, r);
 }
 // 快速排序 开始
 void sort_quick(Item a[]) {
@@ -190,6 +209,7 @@ void sort_heap(Item a[]) {
 		sort_heap_sift(a, 1, i-1);
 	}
 }
+
 
 // 生成随机的数据
 void generate_data_random() {
@@ -262,8 +282,8 @@ void test(const char *name, void (*sort)(Item a[])) {
 void test_all() {
 	//test("    冒泡排序，", sort_bubble);
 	//test("    插入排序，", sort_insertion);
-	test("    选择排序，", sort_selection);
-	//test("    快速排序，", sort_quick);
+	//test("    选择排序，", sort_selection);
+	test("    快速排序，", sort_quick);
 	//test("    希尔排序，", sort_shell);
 	//test("    　堆排序，", sort_heap);
 }
